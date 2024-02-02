@@ -1,17 +1,65 @@
 <script setup lang="ts">
-  // This should be proxied
-  const { data } = await useFetch('/api/search.json?q=97402', { server: true })
+  import { watchDebounced } from '@vueuse/core'
+  import type { SearchLocation } from '~/types'
+
+  const input = ref('')
+  const error = ref<unknown>()
+  const count = ref<undefined | number>()
+
+  const locations = ref<SearchLocation[]>([])
+  const currentSearch = ref(input.value)
+
+  async function autocomplete() {
+    if (currentSearch.value === input.value) {
+      return
+    }
+
+    currentSearch.value = input.value
+    count.value = undefined
+    locations.value = []
+
+    await fetch()
+  }
+
+  async function fetch() {
+    if (!input.value) {
+      return
+    }
+
+    try {
+      const data = await searchLocations(currentSearch.value)
+      count.value = data.length
+      locations.value.push(...data)
+    }
+    catch (e: any) {
+      error.value = e
+    }
+  }
+
+  const vFocus = {
+    mounted(el: HTMLElement) {
+      el.focus()
+    }
+  }
+
+  watchDebounced(input, async () => {
+    autocomplete()
+  }, { debounce: 1000, maxWait: 5000 })
 </script>
 
 <template>
-  <div v-if="data">
-    Data: {{ data }}
-  </div>
-  <a href="/api/search.json?q=97402" target="_blank">
-    To the Endpoint
-  </a>
-
   <div>
-    <NuxtWelcome />
+    <input
+      v-model="input"
+      v-focus
+      type="text"
+      placeholder="Search for cities..."
+    />
+  </div>
+
+  <div v-if="locations">
+    <pre>
+      {{ locations }}
+    </pre>
   </div>
 </template>

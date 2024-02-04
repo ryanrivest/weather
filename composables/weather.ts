@@ -2,7 +2,7 @@ import type { SearchLocation } from '~/types';
 
 async function fetchWeather(
   url: string,
-  params: Record<string, string | number | boolean | undefined> = {}
+  params: Record<string, string | number | boolean | undefined> = {},
 ): Promise<any> {
   const runtimeConfig = useRuntimeConfig();
   return await $fetch(url, {

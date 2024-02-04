@@ -4,10 +4,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     weather: {
       apiKey: '',
-      apiBaseUrl: 'https://api.weatherapi.com/v1/'
+      apiBaseUrl: 'https://api.weatherapi.com/v1/',
     },
     public: {
-      apiBaseUrl: '/api/'
-    }
-  }
-})
+      apiBaseUrl: '/api/',
+    },
+  },
+});

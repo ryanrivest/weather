@@ -1,4 +1,5 @@
 export interface SearchLocation {
+  id: number;
   name: string;
   region: string;
   country: string;

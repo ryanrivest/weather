@@ -1,12 +1,5 @@
 <script setup lang="ts">
 const isCelcius = ref(false);
-
-import { ref } from 'vue';
-import { Switch } from '@headlessui/vue';
-
-const enabled = ref(false);
-
-import Search from '~/components/Search.vue';
 </script>
 
 <template>

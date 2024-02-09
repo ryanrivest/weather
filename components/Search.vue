@@ -61,7 +61,7 @@ watchDebounced(
   async () => {
     autocomplete();
   },
-  { debounce: 1000, maxWait: 5000 }
+  { debounce: 500, maxWait: 1500 }
 );
 </script>
 

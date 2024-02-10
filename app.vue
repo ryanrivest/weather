@@ -10,7 +10,7 @@ const isCelcius = ref(false);
       <img src="/images/logo.svg" alt="Just Weather Logo" class="mx-auto h-7 w-full md:w-auto" />
       <div class="mx-auto flex w-full max-w-lg grow items-center gap-4">
         <Search class="grow" />
-        <Toggle class="flex-shrink-0" v-model="isCelcius" />
+        <Toggle v-model="isCelcius" class="flex-shrink-0" />
       </div>
     </div>
   </main>

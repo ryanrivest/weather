@@ -1,75 +1,22 @@
-# Nuxt 3 Minimal Starter
+# Weather Project
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Weather app built with [Nuxt 3](https://nuxt.com/), [Vue 3](https://vuejs.org/), [Tailwind CSS](https://tailwindcss.nuxtjs.org/), [Headless UI](https://nuxt.com/modules/headlessui), [Nuxt Icon Module](https://nuxt.com/modules/icon), [Weather API](https://www.weatherapi.com) and TypeScript.
+
+🌤️ Live preview: https://weather-eight-chi.vercel.app/
 
 ## Setup
 
-Make sure to install the dependencies:
-
 ```bash
-# npm
-npm install
+# Install dependencies
+$ npm install
 
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
+# Start dev server at `http://localhost:3000'
+$ npm run dev
 ```
 
-## Development Server
+## Credits
 
-Start the development server on `http://localhost:3000`:
+Project designed by [BigDevSoon](https://app.bigdevsoon.me/projects/just-weather-99e5d052-aa79-462c-bdfe-e04f0df33239).
 
-```bash
-# npm
-npm run dev
+Data provided by [Weather API](https://www.weatherapi.com).
 
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

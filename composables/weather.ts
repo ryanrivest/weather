@@ -1,4 +1,4 @@
-import type { SearchLocation } from '~/types';
+import type { Forecast, WeatherLocation } from '~/types';
 
 async function fetchWeather(
   url: string,
@@ -11,6 +11,10 @@ async function fetchWeather(
   });
 }
 
-export function searchLocations(query: string): Promise<SearchLocation[]> {
+export function search(query: string): Promise<WeatherLocation[]> {
   return fetchWeather('search.json', { q: query });
+}
+
+export function fetchForecast(query: string): Promise<Forecast> {
+  return fetchWeather('forecast.json', { q: query, days: 1, aqi: 'no', alerts: 'no' });
 }

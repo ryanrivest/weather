@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { watchDebounced, onClickOutside } from '@vueuse/core';
-import type { SearchLocation } from '~/types';
+import type { WeatherLocation } from '~/types';
 
 const input = ref('');
 const results = ref();
 const error = ref<unknown>();
 const loading = ref(false);
 
-const locations = ref<SearchLocation[]>([]);
+const locations = ref<WeatherLocation[]>([]);
 const currentSearch = ref(input.value);
 
 const searchResults = computed(() => {
@@ -44,7 +44,7 @@ async function fetch() {
   loading.value = true;
 
   try {
-    const data = await searchLocations(currentSearch.value);
+    const data = await search(currentSearch.value);
     locations.value.push(...data);
   } catch (e: any) {
     error.value = e;

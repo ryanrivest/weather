@@ -13,7 +13,7 @@ export default defineNuxtConfig({
     },
   },
   devtools: { enabled: true },
-  modules: ['@nuxtjs/eslint-module', '@nuxtjs/tailwindcss', 'nuxt-headlessui', 'nuxt-icon'],
+  modules: ['@nuxtjs/eslint-module', '@nuxtjs/tailwindcss', 'nuxt-headlessui', 'nuxt-icon', '@pinia/nuxt'],
   runtimeConfig: {
     weather: {
       apiKey: '',

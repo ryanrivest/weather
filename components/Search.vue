@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import { useGeolocation } from '@vueuse/core';
 import { watchDebounced, onClickOutside } from '@vueuse/core';
 import type { WeatherLocation } from '~/types';
 
 const input = ref('');
 const results = ref();
-const error = ref<unknown>();
+// const error = ref<unknown>();
 const loading = ref(false);
 
 const locations = ref<WeatherLocation[]>([]);
@@ -76,6 +77,21 @@ watchDebounced(
 onClickOutside(results, () => {
   clearSearch();
 });
+
+const { coords, error, resume, pause } = useGeolocation({ immediate: false });
+const location = defineModel<WeatherLocation>();
+
+async function getLocation() {
+  resume();
+
+  if (!error.value && coords.value) {
+    const locations = await search(`${coords.value.latitude}, ${coords.value.longitude}`);
+    location.value = locations[0];
+    pause();
+  }
+}
+
+getLocation();
 </script>
 
 <template>
@@ -89,14 +105,23 @@ onClickOutside(results, () => {
         placeholder="Search for cities"
       />
 
-      <Icon
+      <a
         v-if="input.length"
         class="absolute right-1.5 top-1.5 cursor-pointer"
-        name="heroicons:x-mark-20-solid"
-        color="gray"
-        size="1.5em"
+        title="Clear search"
         @click="clearSearch"
-      />
+      >
+        <Icon name="heroicons:x-mark-20-solid" color="gray" size="1.5em" />
+      </a>
+
+      <a
+        v-if="!input.length"
+        class="absolute right-1.5 top-1.5 cursor-pointer"
+        title="Use current location"
+        @click="getLocation"
+      >
+        <Icon name="ic:twotone-my-location" color="gray" size="1.5em" />
+      </a>
     </div>
 
     <div v-if="loading" class="absolute my-2 w-full rounded-lg bg-indigo-50 px-4 py-1.5 text-gray-900 drop-shadow-md">

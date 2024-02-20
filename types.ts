@@ -131,7 +131,7 @@ export interface ForecastHour {
   uv: number;
 }
 
-export interface WeatherStats {
+export interface WeatherDetails {
   sunrise: string;
   sunset: string;
   daily_chance_of_rain: number;

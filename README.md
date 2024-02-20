@@ -1,6 +1,6 @@
 # Weather Project
 
-Weather app built with [Nuxt 3](https://nuxt.com/), [Vue 3](https://vuejs.org/), [Tailwind CSS](https://tailwindcss.nuxtjs.org/), [Headless UI](https://nuxt.com/modules/headlessui), [Nuxt Icon Module](https://nuxt.com/modules/icon), [Weather API](https://www.weatherapi.com) and TypeScript.
+Weather app built with [Nuxt 3](https://nuxt.com/), [Vue 3](https://vuejs.org/), [Tailwind CSS](https://tailwindcss.nuxtjs.org/), [Headless UI](https://nuxt.com/modules/headlessui), [Nuxt Icon Module](https://nuxt.com/modules/icon), [Pinia](https://pinia.vuejs.org/), [Weather API](https://www.weatherapi.com) and TypeScript.
 
 🌤️ Live preview: https://weather-eight-chi.vercel.app/
 

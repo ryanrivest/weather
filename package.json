@@ -16,6 +16,7 @@
     "@nuxt/eslint-config": "^0.2.0",
     "@nuxtjs/eslint-module": "^4.1.0",
     "@nuxtjs/tailwindcss": "^6.11.3",
+    "@pinia/nuxt": "^0.5.1",
     "@vueuse/core": "^10.7.2",
     "@vueuse/nuxt": "^10.7.2",
     "eslint": "^8.56.0",
@@ -28,5 +29,8 @@
     "prettier-plugin-tailwindcss": "^0.5.11",
     "vue": "^3.4.14",
     "vue-router": "^4.2.5"
+  },
+  "dependencies": {
+    "pinia": "^2.1.7"
   }
 }

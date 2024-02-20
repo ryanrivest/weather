@@ -1,49 +1,48 @@
 <script setup lang="ts">
-import type { WeatherStats } from '~/types';
+import type { WeatherDetails } from '~/types';
 
-// TODO: use settings to determine if we should use celcius or fahrenheit
-const isCelcius = false;
+const store = useWeatherStore();
 
 const props = defineProps<{
-  stats: WeatherStats;
+  details: WeatherDetails;
 }>();
 
 function sunrise() {
-  return formatTimeString(props.stats.sunrise);
+  return formatTimeString(props.details.sunrise);
 }
 
 function sunset() {
-  return formatTimeString(props.stats.sunset);
+  return formatTimeString(props.details.sunset);
 }
 
 function chanceOfRain() {
-  return formatPercent(props.stats.daily_chance_of_rain);
+  return formatPercent(props.details.daily_chance_of_rain);
 }
 
 function pressure() {
-  return isCelcius ? `${props.stats.pressure_mb} mb` : `${props.stats.pressure_in} in`;
+  return store.prefersCelcius ? `${props.details.pressure_mb} mb` : `${props.details.pressure_in} in`;
 }
 
 function wind() {
-  const value = isCelcius ? props.stats.wind_kph : props.stats.wind_mph;
-  return formatSpeed(value, isCelcius);
+  const value = store.prefersCelcius ? props.details.wind_kph : props.details.wind_mph;
+  return formatSpeed(value, store.prefersCelcius);
 }
 
 function uv() {
-  return `${props.stats.uv} of 10`;
+  return `${props.details.uv} of 10`;
 }
 
 function feelsLike() {
-  const value = isCelcius ? props.stats.feelslike_c : props.stats.feelslike_f;
+  const value = store.prefersCelcius ? props.details.feelslike_c : props.details.feelslike_f;
   return formatTemp(value);
 }
 
 function visibility() {
-  const value = isCelcius ? props.stats.vis_km : props.stats.vis_miles;
-  return formatDistance(value, isCelcius);
+  const value = store.prefersCelcius ? props.details.vis_km : props.details.vis_miles;
+  return formatDistance(value, store.prefersCelcius);
 }
 
-const details = computed(() => {
+const items = computed(() => {
   return {
     sunrise: { title: 'Sunrise', value: sunrise(), icon: 'bi:sunrise' },
     sunset: { title: 'Sunset', value: sunset(), icon: 'bi:sunset' },
@@ -65,10 +64,10 @@ const details = computed(() => {
   <div class="my-6 rounded-xl bg-indigo-50 p-4 text-base text-gray-900/60">
     <div class="uppercase">Weather Details</div>
     <div class="grid grid-cols-2 gap-4 py-4 md:grid-cols-4">
-      <div v-for="detail in details" :key="detail.title" class="relative rounded-lg bg-white/35 px-4 py-2">
-        <div>{{ detail.title }}</div>
-        <div class="font-bold text-gray-900">{{ detail.value }}</div>
-        <Icon class="absolute right-5 top-1/3" :name="detail.icon" color="gray" size="1.5em" />
+      <div v-for="item in items" :key="item.title" class="relative rounded-lg bg-white/35 px-4 py-2">
+        <div>{{ item.title }}</div>
+        <div class="font-bold text-gray-900">{{ item.value }}</div>
+        <Icon class="absolute right-5 top-1/3" :name="item.icon" color="gray" size="1.5em" />
       </div>
     </div>
   </div>

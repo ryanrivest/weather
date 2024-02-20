@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { Forecast } from '~/types';
 
+const store = useWeatherStore();
+
 const props = defineProps<{
   forecast: Forecast;
 }>();
@@ -10,11 +12,13 @@ const city = computed(() => {
 });
 
 const currentTemp = computed(() => {
-  return props.forecast.current.temp_f;
+  return store.prefersCelcius ? props.forecast.current.temp_c : props.forecast.current.temp_f;
 });
 
 const lowTemp = computed(() => {
-  return props.forecast.forecast.forecastday[0].day.mintemp_f;
+  return store.prefersCelcius
+    ? props.forecast.forecast.forecastday[0].day.mintemp_c
+    : props.forecast.forecast.forecastday[0].day.mintemp_f;
 });
 
 const condition = computed(() => {
@@ -28,7 +32,7 @@ const hours = computed(() => {
   return props.forecast.forecast.forecastday[0].hour;
 });
 
-const stats = computed(() => {
+const details = computed(() => {
   const current = props.forecast.current;
   const dayDetails = props.forecast.forecast.forecastday[0];
   const day = dayDetails.day;
@@ -59,6 +63,6 @@ const stats = computed(() => {
     :condition-icon="condition.icon"
     :condition-text="condition.text"
   />
-  <WeatherTodayCard :hours="hours" />
-  <WeatherStatsCard :stats="stats" />
+  <Today :hours="hours" />
+  <Details :details="details" />
 </template>

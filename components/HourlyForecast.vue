@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { ForecastHour } from '~/types';
 
+const store = useWeatherStore();
+
 const props = defineProps<{
   hour: ForecastHour;
 }>();
@@ -17,7 +19,7 @@ const condition = computed(() => {
 });
 
 const temp = computed(() => {
-  return props.hour.temp_f;
+  return store.prefersCelcius ? props.hour.temp_c : props.hour.temp_f;
 });
 </script>
 

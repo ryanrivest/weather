@@ -84,14 +84,18 @@ const location = defineModel<WeatherLocation>();
 async function getLocation() {
   resume();
 
-  if (!error.value && coords.value) {
-    const locations = await search(`${coords.value.latitude}, ${coords.value.longitude}`);
+  const { latitude, longitude } = coords.value;
+
+  if (!error.value && latitude !== Infinity && longitude !== Infinity) {
+    const locations = await search(`${latitude}, ${longitude}`);
     location.value = locations[0];
     pause();
   }
 }
 
-getLocation();
+onMounted(async () => {
+  await getLocation();
+});
 </script>
 
 <template>

@@ -6,8 +6,26 @@ const forecast = ref<Forecast>();
 const error = ref<unknown>();
 const prefersCelcius = ref(false);
 
+const store = useWeatherStore();
+
 onMounted(async () => {
   await getLocation();
+});
+
+watch(
+  () => store.prefersCelcius,
+  (value) => {
+    prefersCelcius.value = value;
+  },
+  { immediate: true }
+);
+
+watch(prefersCelcius, () => {
+  store.prefersCelcius = prefersCelcius.value;
+});
+
+watch(location, async () => {
+  await getForecast();
 });
 
 async function getLocation() {
@@ -32,26 +50,6 @@ async function getForecast() {
     error.value = e;
   }
 }
-
-const store = useWeatherStore();
-
-onMounted(() => {
-  watch(
-    () => store.prefersCelcius,
-    (value) => {
-      prefersCelcius.value = value;
-    },
-    { immediate: true }
-  );
-
-  watch(prefersCelcius, () => {
-    store.prefersCelcius = prefersCelcius.value;
-  });
-
-  watch(location, async () => {
-    await getForecast();
-  });
-});
 </script>
 
 <template>
@@ -67,6 +65,7 @@ onMounted(() => {
     </div>
     <Forecast v-if="forecast" :forecast="forecast" />
   </main>
+  <NuxtPage />
 </template>
 
 <style>

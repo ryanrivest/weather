@@ -22,9 +22,11 @@ const lowTemp = computed(() => {
 });
 
 const condition = computed(() => {
+  const icon = props.forecast.current.condition.icon.replace(/64x64/g, '128x128');
+
   return {
     text: props.forecast.current.condition.text,
-    icon: props.forecast.current.condition.icon,
+    icon: icon,
   };
 });
 

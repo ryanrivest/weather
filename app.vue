@@ -46,6 +46,7 @@ async function getForecast() {
     const { lat, lon } = location.value;
     const data = await fetchForecast(`${lat},${lon}`);
     forecast.value = data;
+    store.addRecentForecast(data);
   } catch (e: any) {
     error.value = e;
   }
@@ -60,12 +61,13 @@ async function getForecast() {
       <img src="/images/logo.svg" alt="Just Weather Logo" class="mx-auto h-7 w-full md:ml-auto md:mr-0 md:w-auto" />
       <div class="mx-auto flex w-full grow items-center gap-4 md:ml-8">
         <Search v-model="location" class="grow" />
-        <TempToggle v-model="prefersCelcius" class="flex-shrink-0" />
+        <ClientOnly>
+          <TempToggle v-model="prefersCelcius" class="flex-shrink-0" />
+        </ClientOnly>
       </div>
     </div>
     <Forecast v-if="forecast" :forecast="forecast" />
   </main>
-  <NuxtPage />
 </template>
 
 <style>

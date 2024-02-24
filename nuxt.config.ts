@@ -9,6 +9,11 @@ export default defineNuxtConfig({
           type: 'text/css',
           href: 'https://fonts.googleapis.com/css?family=Nunito:400,600,700&display=swap',
         },
+        {
+          rel: 'icon',
+          type: 'image/svg+xml',
+          href: '/favicon.svg',
+        },
       ],
     },
   },

@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import type { ForecastHour } from '~/types';
+import type { Forecast } from '~/types';
 
-defineProps<{
-  hours: ForecastHour[];
+const props = defineProps<{
+  forecast: Forecast;
 }>();
+
+const hours = computed(() => {
+  return props.forecast.forecast.forecastday[0].hour;
+});
 </script>
 
 <template>

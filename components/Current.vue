@@ -1,25 +1,33 @@
 <script setup lang="ts">
-defineProps({
-  city: {
-    type: String,
-    required: true,
-  },
-  currentTemp: {
-    type: Number,
-    required: true,
-  },
-  lowTemp: {
-    type: Number,
-    required: true,
-  },
-  conditionIcon: {
-    type: String,
-    required: true,
-  },
-  conditionText: {
-    type: String,
-    required: true,
-  },
+import type { Forecast } from '~/types';
+
+const props = defineProps<{
+  forecast: Forecast;
+}>();
+
+const store = useWeatherStore();
+
+const city = computed(() => {
+  return props.forecast.location.name;
+});
+
+const currentTemp = computed(() => {
+  return store.prefersCelcius ? props.forecast.current.temp_c : props.forecast.current.temp_f;
+});
+
+const lowTemp = computed(() => {
+  return store.prefersCelcius
+    ? props.forecast.forecast.forecastday[0].day.mintemp_c
+    : props.forecast.forecast.forecastday[0].day.mintemp_f;
+});
+
+const condition = computed(() => {
+  const icon = props.forecast.current.condition.icon.replace(/64x64/g, '128x128');
+
+  return {
+    text: props.forecast.current.condition.text,
+    icon: icon,
+  };
 });
 </script>
 
@@ -33,7 +41,7 @@ defineProps({
       </div>
     </div>
     <div>
-      <img :src="conditionIcon" :alt="conditionText" width="100" height="100" />
+      <img :src="condition.icon" :alt="condition.text" width="100" height="100" />
     </div>
   </div>
 </template>

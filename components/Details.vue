@@ -1,46 +1,11 @@
 <script setup lang="ts">
-import type { WeatherDetails } from '~/types';
-
 const store = useWeatherStore();
 
+import type { Forecast } from '~/types';
+
 const props = defineProps<{
-  details: WeatherDetails;
+  forecast: Forecast;
 }>();
-
-function sunrise() {
-  return formatTimeString(props.details.sunrise);
-}
-
-function sunset() {
-  return formatTimeString(props.details.sunset);
-}
-
-function chanceOfRain() {
-  return formatPercent(props.details.daily_chance_of_rain);
-}
-
-function pressure() {
-  return store.prefersCelcius ? `${props.details.pressure_mb} mb` : `${props.details.pressure_in} in`;
-}
-
-function wind() {
-  const value = store.prefersCelcius ? props.details.wind_kph : props.details.wind_mph;
-  return formatSpeed(value, store.prefersCelcius);
-}
-
-function uv() {
-  return `${props.details.uv} of 10`;
-}
-
-function feelsLike() {
-  const value = store.prefersCelcius ? props.details.feelslike_c : props.details.feelslike_f;
-  return formatTemp(value);
-}
-
-function visibility() {
-  const value = store.prefersCelcius ? props.details.vis_km : props.details.vis_miles;
-  return formatDistance(value, store.prefersCelcius);
-}
 
 const items = computed(() => {
   return {
@@ -57,6 +22,53 @@ const items = computed(() => {
     feelslike: { title: 'Feels like', value: feelsLike(), icon: 'bi:thermometer-half' },
     visibility: { title: 'Visibility', value: visibility(), icon: 'bi:eye-fill' },
   };
+});
+
+function sunrise() {
+  return formatTimeString(astro.value.sunrise);
+}
+
+function sunset() {
+  return formatTimeString(astro.value.sunset);
+}
+
+function chanceOfRain() {
+  return formatPercent(day.value.daily_chance_of_rain);
+}
+
+function pressure() {
+  return store.prefersCelcius ? `${current.value.pressure_mb} mb` : `${current.value.pressure_in} in`;
+}
+
+function wind() {
+  const value = store.prefersCelcius ? current.value.wind_kph : current.value.wind_mph;
+  return formatSpeed(value, store.prefersCelcius);
+}
+
+function uv() {
+  return `${current.value.uv} of 10`;
+}
+
+function feelsLike() {
+  const value = store.prefersCelcius ? current.value.feelslike_c : current.value.feelslike_f;
+  return formatTemp(value);
+}
+
+function visibility() {
+  const value = store.prefersCelcius ? current.value.vis_km : current.value.vis_miles;
+  return formatDistance(value, store.prefersCelcius);
+}
+
+const current = computed(() => {
+  return props.forecast.current;
+});
+
+const day = computed(() => {
+  return props.forecast.forecast.forecastday[0].day;
+});
+
+const astro = computed(() => {
+  return props.forecast.forecast.forecastday[0].astro;
 });
 </script>
 

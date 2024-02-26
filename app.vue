@@ -6,6 +6,8 @@ const prefersCelcius = ref(false);
 
 const store = useWeatherStore();
 
+const { data } = await useFetch('/api/ip');
+
 onMounted(async () => {
   await getLocation();
 });
@@ -23,7 +25,13 @@ watch(prefersCelcius, () => {
 });
 
 async function getLocation() {
-  const locations = await search('auto:ip');
+  if (!data.value) {
+    return;
+  }
+
+  const ip = data.value.ip != '127.0.0.1' ? data.value.ip : 'auto:ip';
+
+  const locations = await search(ip);
   location.value = locations[0];
 }
 </script>

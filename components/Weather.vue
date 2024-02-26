@@ -36,6 +36,8 @@ async function getForecast() {
 </script>
 
 <template>
+  <WeatherSkeleton v-if="loading" />
+  <Error v-else-if="error" />
   <div v-if="loading"><WeatherSkeleton /></div>
   <div v-else>
     <Current v-if="forecast" :forecast="forecast" />

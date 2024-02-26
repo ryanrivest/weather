@@ -2,7 +2,6 @@
 import type { WeatherLocation } from './types';
 
 const location = ref<WeatherLocation>();
-const error = ref<unknown>();
 const prefersCelcius = ref(false);
 
 const store = useWeatherStore();
@@ -24,12 +23,8 @@ watch(prefersCelcius, () => {
 });
 
 async function getLocation() {
-  try {
-    const locations = await search('auto:ip');
-    location.value = locations[0];
-  } catch (e: any) {
-    error.value = e;
-  }
+  const locations = await search('auto:ip');
+  location.value = locations[0];
 }
 </script>
 

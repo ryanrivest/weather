@@ -17,8 +17,14 @@ const currentSearch = ref(inputValue.value);
 const store = useWeatherStore();
 const { recentForecasts } = storeToRefs(store);
 
-onMounted(async () => {
-  await getLocation();
+watch(coords, async () => {
+  const { latitude, longitude } = coords.value;
+
+  if (!error.value && latitude !== Infinity && longitude !== Infinity) {
+    const locations = await search(`${latitude}, ${longitude}`);
+    location.value = locations[0];
+    pause();
+  }
 });
 
 const { focused: inputFocus } = useFocus(input);
@@ -102,16 +108,8 @@ onClickOutside(results, () => {
   clearSearch();
 });
 
-async function getLocation() {
+async function startGeolocation() {
   resume();
-
-  const { latitude, longitude } = coords.value;
-
-  if (!error.value && latitude !== Infinity && longitude !== Infinity) {
-    const locations = await search(`${latitude}, ${longitude}`);
-    location.value = locations[0];
-    pause();
-  }
 }
 
 function selectLocation(selectedLocation: WeatherLocation) {
@@ -153,7 +151,7 @@ function clearRecent() {
         v-if="!inputValue.length"
         class="absolute right-1.5 top-1.5 cursor-pointer text-gray-900/60 hover:text-gray-900"
         title="Use current location"
-        @click="getLocation"
+        @click="startGeolocation"
       >
         <Icon name="ic:twotone-my-location" size="1.5em" />
       </a>

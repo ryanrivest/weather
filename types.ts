@@ -127,18 +127,3 @@ export interface ForecastHour {
   gust_kph: number;
   uv: number;
 }
-
-export interface WeatherDetails {
-  sunrise: string;
-  sunset: string;
-  daily_chance_of_rain: number;
-  pressure_mb: number;
-  pressure_in: number;
-  wind_mph: number;
-  wind_kph: number;
-  uv: number;
-  feelslike_c: number;
-  feelslike_f: number;
-  vis_km: number;
-  vis_miles: number;
-}

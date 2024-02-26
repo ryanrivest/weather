@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import type { Forecast, WeatherLocation } from './types';
+import type { WeatherLocation } from './types';
 
 const location = ref<WeatherLocation>();
-const forecast = ref<Forecast>();
 const error = ref<unknown>();
 const prefersCelcius = ref(false);
 
@@ -24,29 +23,10 @@ watch(prefersCelcius, () => {
   store.prefersCelcius = prefersCelcius.value;
 });
 
-watch(location, async () => {
-  await getForecast();
-});
-
 async function getLocation() {
   try {
     const locations = await search('auto:ip');
     location.value = locations[0];
-  } catch (e: any) {
-    error.value = e;
-  }
-}
-
-async function getForecast() {
-  if (!location.value) {
-    return;
-  }
-
-  try {
-    const { lat, lon } = location.value;
-    const data = await fetchForecast(`${lat},${lon}`);
-    forecast.value = data;
-    store.addRecentForecast(data);
   } catch (e: any) {
     error.value = e;
   }
@@ -66,7 +46,8 @@ async function getForecast() {
         </ClientOnly>
       </div>
     </div>
-    <Forecast v-if="forecast" :forecast="forecast" />
+
+    <Weather v-if="location" v-model="location" />
   </main>
 </template>
 
